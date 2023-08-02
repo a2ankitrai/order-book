@@ -65,23 +65,29 @@ Example:
 
 ## Output
 
-The application will emit trades as they occur in the following format:
-
+The application will emit trades  that occur as orders are processed. The trades are displayed in the format:
 ```
 trade <aggressing-order-id>,<resting-order-id>,<price>,<quantity>
 ```
 
-Additionally, once standard input ends, the program will print the final contents of the order book with the following format:
+After all trades are processed, the final contents of the order book are displayed.
+
+The order book output is formatted as follows:
 
 ```
-Buy Orders           | Sell Orders
-000,000,000 000000   | 000000 000,000,000
-000,000,000 000000   | 000000 000,000,000
-...
+000,000,000 000000 | 000000 000,000,000
 ```
 
-The output will also include the MD5 hash of the order book for validation:
+If a value is too small to cover the whole reserved area, it is left padded with spaces.
+The output also includes the hash of the order book contents, provided as an additional feature:
 
 ```
-Hash: 8ff13aad3e61429bfb5ce0857e846567
+50,000 99 | 100 500
+25,500 98 | 100 10,000
+| 103 100
+| 105 20,000
+
+Hash: [hash]
 ```
+
+Please note that the current implementation is designed for single-threaded execution. The data structures used to store and manage orders are not thread-safe. 
